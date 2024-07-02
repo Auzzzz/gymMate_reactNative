@@ -2,8 +2,14 @@ import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
-import { useTheme, Button, TextInput, Text } from "react-native-paper";
-
+import {
+  useTheme,
+  Button,
+  TextInput,
+  Text,
+  HelperText,
+} from "react-native-paper";
+import { ClerkError } from "@/types/clerkTypes";
 
 export default function SignUpScreen() {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -14,6 +20,8 @@ export default function SignUpScreen() {
   const [password, setPassword] = React.useState("");
   const [pendingVerification, setPendingVerification] = React.useState(false);
   const [code, setCode] = React.useState("");
+  const [isError, setIsError] = React.useState(false);
+  const [error, setError] = React.useState({} as ClerkError);
 
   const onSignUpPress = async () => {
     if (!isLoaded) {
@@ -27,12 +35,19 @@ export default function SignUpScreen() {
       });
 
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-
+      setIsError(false);
       setPendingVerification(true);
     } catch (err: any) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
-      console.error(JSON.stringify(err, null, 2));
+      setIsError(true);
+      setError(err);
+      // console.log(error.errors[0].message);
+      // console.error(JSON.stringify(err, null, 2));
+
+      // error.errors.forEach((error) => {
+      //   console.log(error.message);
+      // });
     }
   };
 
@@ -55,7 +70,10 @@ export default function SignUpScreen() {
     } catch (err: any) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
-      console.error(JSON.stringify(err, null, 2));
+      // console.log(err);
+      // console.error(JSON.stringify(err, null, 2));
+      setIsError(true);
+      setError(err);
     }
   };
 
@@ -68,9 +86,24 @@ export default function SignUpScreen() {
       paddingTop: 20,
     },
   });
+
   //TODO: add logo
   return (
     <View style={styles.container}>
+
+      {isError &&  error.errors &&
+        error.errors.map((error) => (
+          <Text
+            variant="bodyLarge"
+            style={{ color: "red", marginBottom: 10 }}
+            key={error.longMessage}
+          >
+            {error.message}
+          </Text>
+        ))}
+
+      
+
       {!pendingVerification && (
         <>
           <TextInput

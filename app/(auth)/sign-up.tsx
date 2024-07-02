@@ -1,12 +1,14 @@
 import * as React from "react";
-import { TextInput, Button, View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
+import { useTheme, Button, TextInput, Text } from "react-native-paper";
 
-//TODO: format sign up page
+
 export default function SignUpScreen() {
   const { isLoaded, signUp, setActive } = useSignUp();
   const router = useRouter();
+  const theme = useTheme();
 
   const [emailAddress, setEmailAddress] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -44,9 +46,9 @@ export default function SignUpScreen() {
         code,
       });
 
-      if (completeSignUp.status === 'complete') {
+      if (completeSignUp.status === "complete") {
         await setActive({ session: completeSignUp.createdSessionId });
-        router.replace('/');
+        router.replace("/");
       } else {
         console.error(JSON.stringify(completeSignUp, null, 2));
       }
@@ -57,8 +59,18 @@ export default function SignUpScreen() {
     }
   };
 
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+      alignItems: "center",
+      justifyContent: "center",
+      paddingTop: 20,
+    },
+  });
+  //TODO: add logo
   return (
-    <View>
+    <View style={styles.container}>
       {!pendingVerification && (
         <>
           <TextInput
@@ -66,24 +78,62 @@ export default function SignUpScreen() {
             value={emailAddress}
             placeholder="Email..."
             onChangeText={(email) => setEmailAddress(email)}
+            style={{ marginBottom: 20, width: "80%" }}
           />
           <TextInput
             value={password}
             placeholder="Password..."
             secureTextEntry={true}
             onChangeText={(password) => setPassword(password)}
+            style={{ marginBottom: 20, width: "80%" }}
           />
-          <Button title="Sign Up" onPress={onSignUpPress} />
+          <Button
+            style={{
+              backgroundColor: theme.colors.primary,
+              margin: 6,
+              width: "60%",
+            }}
+            mode="contained"
+            onPress={onSignUpPress}
+          >
+            Sign Up
+          </Button>
+
+          <View style={{ marginTop: 20 }}>
+            <Text>All ready have an account?</Text>
+            <Button
+              style={{ backgroundColor: theme.colors.secondary, margin: 6 }}
+              mode="contained"
+              onPress={() => router.push("/sign-in")}
+            >
+              Sign In
+            </Button>
+          </View>
         </>
       )}
       {pendingVerification && (
         <>
+          <Text variant="titleMedium" style={{ marginBottom: 20 }}>
+            Check your email for a verification code
+          </Text>
           <TextInput
             value={code}
             placeholder="Code..."
+            keyboardType="number-pad"
             onChangeText={(code) => setCode(code)}
+            style={{ marginBottom: 20, width: "80%" }}
           />
-          <Button title="Verify Email" onPress={onPressVerify} />
+          <Button
+            style={{
+              backgroundColor: theme.colors.primary,
+              margin: 6,
+              width: "60%",
+            }}
+            mode="contained"
+            onPress={onPressVerify}
+          >
+            Verify Email
+          </Button>
         </>
       )}
     </View>

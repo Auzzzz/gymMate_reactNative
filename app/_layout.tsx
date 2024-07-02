@@ -66,7 +66,7 @@ const RootLayout = () => {
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
       <ClerkLoaded>
         <PaperProvider theme={theme}>
-          <Stack>
+          <Stack screenOptions={{headerShown: false}}>
             <Stack.Screen
               name="(tabs)"
               options={{

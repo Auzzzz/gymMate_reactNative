@@ -1,6 +1,7 @@
 import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo"
 import { Stack } from 'expo-router'
 import * as SecureStore from 'expo-secure-store';
+import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
 
 // Cache tokens
 const tokenCache = {
@@ -34,10 +35,25 @@ const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 if (!publishableKey) {
   throw new Error('Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env')
 }
+
+// defalt theme
+const theme = {
+    ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'tomato',
+    secondary: 'yellow',
+  },
+
+}
+
+
+
 const RootLayout = () => {
     return (
         <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
       <ClerkLoaded>
+        <PaperProvider theme={theme}>
         <Stack>
             <Stack.Screen
                 name="(tabs)"
@@ -46,6 +62,7 @@ const RootLayout = () => {
                 }}
             />
         </Stack>
+        </PaperProvider>
         </ClerkLoaded>
     </ClerkProvider>
     )

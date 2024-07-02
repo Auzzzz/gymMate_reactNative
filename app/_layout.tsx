@@ -57,7 +57,7 @@ const theme = {
     elevation: "#E0FF4F",
     
     // Main Background
-    background: "#DBE3E6"
+    background: "#F3F6F7"
   },
 };
 

@@ -1,11 +1,13 @@
 import { View, Pressable } from "react-native";
 import { Link, router } from "expo-router";
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
-import { Text } from 'react-native-paper';
+import { Button, Text } from 'react-native-paper';
 import * as React from 'react';
+import { useAuth } from '@clerk/clerk-react';
 
 const HomePage = () => {
   const { user } = useUser();
+  const auth = useAuth();
   console.log(user);
   return (
     <View>
@@ -19,6 +21,7 @@ const HomePage = () => {
 
       <SignedIn>
         <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
+        <Button onPress={() => auth.signOut()}> Sign Out </Button>
       </SignedIn>
       <SignedOut>
         <Link href="/sign-in">

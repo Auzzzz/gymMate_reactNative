@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router'
-
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 const TabsLayout = () => {
     return (
         <Tabs>
@@ -13,7 +13,7 @@ const TabsLayout = () => {
             <Tabs.Screen
                 name="index"
                 options={{
-                    headerTitle: "Home Tab",
+                    headerShown: false,
                     title: "Home Tab Title"
                 }}
             />
@@ -21,8 +21,11 @@ const TabsLayout = () => {
                 name="account/index"
                 options={{
                     headerTitle: "Account",
-                    title: "Account Title"
+                    title: "My Account",
+                    tabBarIcon: ({ color }) => <MaterialCommunityIcons name="account" size={24} color={color} />
                 }} />
+
+            
         </Tabs>
     )
 }

@@ -88,10 +88,11 @@ export default function SignUpScreen() {
   });
 
   //TODO: add logo
+  //TODO: password show/hide
   return (
     <View style={styles.container}>
-
-      {isError &&  error.errors &&
+      {isError &&
+        error.errors &&
         error.errors.map((error) => (
           <Text
             variant="bodyLarge"
@@ -101,8 +102,6 @@ export default function SignUpScreen() {
             {error.message}
           </Text>
         ))}
-
-      
 
       {!pendingVerification && (
         <>

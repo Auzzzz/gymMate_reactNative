@@ -92,8 +92,7 @@ export default function Page() {
         mode="contained"
         onPress={onSignInPress}
       >
-        {" "}
-        Sign In{" "}
+        Sign In
       </Button>
       <View style={{ marginTop: 20 }}>
         <Text>Don't have an account?</Text>
@@ -102,10 +101,14 @@ export default function Page() {
           mode="contained"
           onPress={() => router.push("/sign-up")}
         >
-          {" "}
-          Sign Up{" "}
+          Sign Up
         </Button>
       </View>
+      <View style={{ paddingTop: 20}}>
+      <Link href="/reset">
+          <Text style={{ fontSize: 16 }}>Forgot your password?</Text>
+        </Link>
+        </View>
     </View>
   );
 }

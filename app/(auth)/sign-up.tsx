@@ -18,6 +18,7 @@ export default function SignUpScreen() {
 
   const [emailAddress, setEmailAddress] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [username, setUsername] = React.useState("");
   const [pendingVerification, setPendingVerification] = React.useState(false);
   const [code, setCode] = React.useState("");
   const [isError, setIsError] = React.useState(false);
@@ -32,6 +33,8 @@ export default function SignUpScreen() {
       await signUp.create({
         emailAddress,
         password,
+        username,
+        
       });
 
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
@@ -43,7 +46,7 @@ export default function SignUpScreen() {
       setIsError(true);
       setError(err);
       // console.log(error.errors[0].message);
-      // console.error(JSON.stringify(err, null, 2));
+      console.error(JSON.stringify(err, null, 2));
 
       // error.errors.forEach((error) => {
       //   console.log(error.message);
@@ -70,7 +73,7 @@ export default function SignUpScreen() {
     } catch (err: any) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
-      // console.log(err);
+       console.log(err);
       // console.error(JSON.stringify(err, null, 2));
       setIsError(true);
       setError(err);
@@ -99,7 +102,7 @@ export default function SignUpScreen() {
             style={{ color: "red", marginBottom: 10 }}
             key={error.longMessage}
           >
-            {error.message}
+            {error.longMessage}
           </Text>
         ))}
 
@@ -112,6 +115,14 @@ export default function SignUpScreen() {
             onChangeText={(email) => setEmailAddress(email)}
             style={{ marginBottom: 20, width: "80%" }}
           />
+          <TextInput
+            autoCapitalize="none"
+            value={username}
+            placeholder="Nickname..."
+            onChangeText={(username) => setUsername(username)}
+            style={{ marginBottom: 20, width: "80%" }}
+          />          
+          
           <TextInput
             value={password}
             placeholder="Password..."

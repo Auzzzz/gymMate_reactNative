@@ -22,7 +22,7 @@ const index = () => {
       <SignedIn>
         <Avatar.Image size={150} source={{ uri: user?.imageUrl }} />
         <Text>{user?.fullName}</Text>
-        <Text>{user?.username}</Text>
+        <Text>Hello {user?.username}</Text>
         <Text>{user?.emailAddresses[0].emailAddress}</Text>
 				<Button onPress={() => auth.signOut()}> Sign Out </Button>
 

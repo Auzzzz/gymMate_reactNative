@@ -14,7 +14,10 @@ const TabsLayout = () => {
                 name="index"
                 options={{
                     headerShown: false,
-                    title: "Home Tab Title"
+                    title: "Home Tab Title",
+                    tabBarIcon: ({ color }) => <MaterialCommunityIcons name="weight-lifter" size={24} color={color} />
+
+                    
                 }}
             />
             <Tabs.Screen

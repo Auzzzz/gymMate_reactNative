@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import {
   SafeAreaView,
   View,
@@ -54,8 +55,8 @@ export default function IndividualWorkout() {
           <Chip style={{ margin: 4 }} icon="clock">
             4 hours
           </Chip>
-          <Chip style={{ margin: 4 }} icon="clock">
-            4 hours
+          <Chip style={{ margin: 4 }} icon="lock">
+            Private
           </Chip>
         </View>
       </View>
@@ -86,6 +87,7 @@ export default function IndividualWorkout() {
             backgroundColor: theme.colors.primary,
           }}
           mode="contained"
+          onPress={() => router.push("/individualWorkoutEdit")}
         >
           Edit
         </Button>

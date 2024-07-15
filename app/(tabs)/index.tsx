@@ -230,7 +230,7 @@ const HomePage = () => {
           <Divider />
         </View>
 
-        <Link href="/">
+        <Link href="/individualWorkouts">
           <Text style={{ fontSize: 16 }}>View all workouts</Text>
         </Link>
         

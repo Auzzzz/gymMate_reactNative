@@ -12,3 +12,22 @@ export type ClerkErrors = {
 		"paramName": string,
 	}
 };
+
+export interface API_WorkoutGET {
+    clerkID:  string;
+    id:       number;
+    signup:   Date;
+    workouts: Workout[];
+}
+
+export interface Workout {
+    created:   Date;
+    desc:      string | null;
+    name:      string;
+    preMade:   boolean;
+    private:   boolean;
+    restTime:  string;
+    time:      string;
+    updated:   Date | null;
+    workoutId: number;
+}

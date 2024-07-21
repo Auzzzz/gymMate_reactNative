@@ -11,6 +11,7 @@ export default function WorkoutsRoutesLayout() {
   return <Stack screenOptions={{headerShown: true}}> 
     <Stack.Screen name="individualWorkouts" options={{ headerTitle: "I Workout"}} />
     <Stack.Screen name="individualWorkoutEdit" />
+    <Stack.Screen name="allWorkouts" options={{headerTitle: "All workouts"}} />
 
     {/* <Stack.Screen name="sign-up" options={{ headerTitle: "Sign Up"}}/>
     <Stack.Screen name="reset" options={{ headerTitle: "Reset Password"}}/> */}

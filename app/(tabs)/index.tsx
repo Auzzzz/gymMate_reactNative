@@ -29,7 +29,6 @@ const HomePage = () => {
   const auth = useAuth();
   const theme = useTheme();
   const [searchQuery, setSearchQuery] = useState("");
-  // console.log(user);
 
   const styles = StyleSheet.create({
     container: {
@@ -230,7 +229,9 @@ const HomePage = () => {
           <Divider />
         </View>
 
-        <Link href="/individualWorkouts">
+        {/* <Link href="/individualWorkouts"> */}
+        <Link href="(workouts)/allWorkouts">
+
           <Text style={{ fontSize: 16 }}>View all workouts</Text>
         </Link>
         

@@ -17,7 +17,7 @@ import {
   TextInput,
 } from "react-native-paper";
 
-export default function AddToWorkouit() {
+export default function AddToWorkout() {
   const theme = useTheme();
   const [searchQuery, setSearchQuery] = useState("");
   // Model
@@ -139,6 +139,11 @@ export default function AddToWorkouit() {
               <TextInput
                 style={{ width: "40%", margin: 4 }}
                 label="Repeat"
+                keyboardType={"number-pad"}
+              />
+               <TextInput
+                style={{ width: "40%", margin: 4 }}
+                label="Weight"
                 keyboardType={"number-pad"}
               />
             </View>

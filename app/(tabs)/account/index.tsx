@@ -77,22 +77,25 @@ const index = () => {
   });
 
   const workoutList = () => {
-    console.log(
-      "workouts",
-      workouts.map((workout) => workout.workouts.map((workout) => workout.name))
-    );
-    console.log(
-      "workouts",
-      workouts.map((workout) => typeof workout.clerkID)
-    );
+    // console.log(
+    //   "workouts",
+    //   workouts.map((workout) => workout.workouts.map((workout) => workout.name))
+    // );
+    // console.log(
+    //   "workouts",
+    //   workouts.map((workout) => typeof workout.clerkID)
+    // );
 
-    return (
-      <>
-        {workouts.map((workout) => (
-          <Text key={workout.id}>{JSON.stringify(workout)}</Text>
-        ))}
-      </>
-    );
+    // return (
+    //   <>
+    //     {workouts.map((workout) => (
+    //       <Text key={workout.id}>{JSON.stringify(workout)}</Text>
+    //     ))}
+    //   </>
+    // );
+    
+
+
   };
 
   return (
@@ -124,7 +127,7 @@ const index = () => {
         </View>
       </SignedOut>
       <Button onPress={() => setUpdate(true)}> Workouts </Button>
-      {workoutList()}
+      {/* {workoutList()} */}
     </View>
   );
 };

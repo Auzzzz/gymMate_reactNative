@@ -1,4 +1,4 @@
-import { useUser } from "@clerk/clerk-expo";
+import { useAuth, useUser } from "@clerk/clerk-expo";
 import { router } from "expo-router";
 import {
   SafeAreaView,
@@ -6,13 +6,71 @@ import {
   StatusBar,
   StyleSheet,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import { Button, Chip, Text, useTheme } from "react-native-paper";
+import Workout_click from "../components/workout_click";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { API_WorkoutGET } from "@/types/clerkTypes";
 
 export default function AllWorkouts() {
   const theme = useTheme();
   const { user } = useUser();
-  
+  const auth = useAuth();
+  const [workouts, setWorkouts] = useState<API_WorkoutGET[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const get = async () => {
+      const url = "workout/getUserWorkout/1234abcd";
+      try {
+        setLoading(true);
+        axios
+          .get(`${process.env.EXPO_PUBLIC_BaseURL + url}`, {
+            headers: { Authorization: `Bearer ${await auth.getToken()}` },
+          })
+          .then((res) => {
+            if (
+              res.data === null ||
+              res.data === undefined ||
+              res.data.length === 0
+            ) {
+              setLoading(false);
+            }
+            // console.log("hi", res);
+            setWorkouts(res.data);
+            setLoading(false);
+          })
+          .catch((err) => {
+            setLoading(false);
+            console.log("yo", err);
+          });
+      } catch (err) {
+        console.log("hi", err);
+      }
+    };
+    get();
+  }, []);
+
+  if (loading || workouts === undefined) {
+    return (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <ActivityIndicator
+          animating={true}
+          size={70}
+          color={theme.colors.primary}
+        />
+      </SafeAreaView>
+    );
+  }
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -68,43 +126,20 @@ export default function AllWorkouts() {
         <View style={{ margin: 10 }}>
           <Text variant="headlineSmall"> ALL WORKS</Text>
         </View>
+        <View style={{ margin: 20 }}>
+          {/* {workouts?.workouts.map((workout) => (
+              <Workout_click key={workout.time} {...workout} />
+            ))} */}
+
+          {workouts.map((workout) =>
+            workout.workouts.map((workout) => (
+              <Workout_click key={workout.time} {...workout} />
+            ))
+          )}
+
+          {/* <Workout_click workouts={workouts?.workouts} /> */}
+        </View>
       </ScrollView>
-      {/* Buttons */}
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "row",
-          position: "absolute",
-          bottom: 30,
-          width: "100%",
-        }}
-      >
-        <Button
-          style={{
-            marginTop: 20,
-            padding: 5,
-            margin: 3,
-            backgroundColor: theme.colors.primary,
-          }}
-          mode="contained"
-          onPress={() => router.push("/individualWorkoutEdit")}
-        >
-          Edit
-        </Button>
-        <Button
-          style={{
-            marginTop: 20,
-            padding: 5,
-            margin: 3,
-            backgroundColor: theme.colors.secondary,
-          }}
-          mode="contained"
-        >
-          Start
-        </Button>
-      </View>
     </SafeAreaView>
   );
 }

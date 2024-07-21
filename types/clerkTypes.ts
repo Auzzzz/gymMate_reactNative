@@ -13,11 +13,12 @@ export type ClerkErrors = {
 	}
 };
 
-export interface API_WorkoutGET {
+
+export type API_WorkoutGET = {
     clerkID:  string;
     id:       number;
     signup:   Date;
-    workouts: Workout[];
+    workouts: Workout[]
 }
 
 export interface Workout {

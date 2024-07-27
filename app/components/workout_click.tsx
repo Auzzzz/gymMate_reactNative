@@ -1,4 +1,5 @@
 import { API_WorkoutGET, Workout } from '@/types/clerkTypes'
+import { router } from 'expo-router';
 import React from 'react'
 import { View } from 'react-native'
 import {
@@ -11,7 +12,6 @@ import {
 const Workout_click = (workouts: Workout) => {
 
     const theme = useTheme();
-     console.log("wc",workouts)
   return (
     <View style={{ flexDirection: "row", marginBottom: 12 }}>
           <View style={{ alignSelf: "flex-start", flex: 1 }}>
@@ -29,6 +29,7 @@ const Workout_click = (workouts: Workout) => {
                 margin: 6,
                 backgroundColor: theme.colors.primary,
               }}
+              onPress={() => router.push("individualWorkouts/" + workouts.workoutId)}
               mode="contained"
             >
               View

@@ -1,14 +1,15 @@
 import { useAuth, useUser } from "@clerk/clerk-expo";
-import { router } from "expo-router";
 import {
   SafeAreaView,
   View,
-  StatusBar,
   StyleSheet,
   ScrollView,
   ActivityIndicator,
 } from "react-native";
-import { Button, Chip, Text, useTheme } from "react-native-paper";
+import {
+  Text,
+  useTheme,
+} from "react-native-paper";
 import Workout_click from "../components/workout_click";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -20,6 +21,8 @@ export default function AllWorkouts() {
   const auth = useAuth();
   const [workouts, setWorkouts] = useState<API_WorkoutGET[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const workoutCount = workouts.map((workout) => workout.workouts);
 
   useEffect(() => {
     const get = async () => {
@@ -87,13 +90,13 @@ export default function AllWorkouts() {
     },
   });
 
-  //TODO: add custom header w/ name of WO
+  //TODO: link to create Workouts
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Text variant="headlineMedium" style={{}}>
-          {user?.username} workout's
+        <Text variant="headlineMedium" style={{ textTransform: "capitalize" }}>
+          {user?.username?.toLowerCase()} workout's
         </Text>
         <View
           style={{
@@ -103,41 +106,41 @@ export default function AllWorkouts() {
             flexWrap: "wrap",
           }}
         >
-          <Chip style={{ margin: 4 }} icon="numeric">
+          {/* TODO add count of workout totals */}
+          {/* <Chip style={{ margin: 4 }} icon="numeric">
             4 hours
-          </Chip>
-          <Chip style={{ margin: 4 }} icon="weight">
-            1200 Elements
           </Chip>
           <Chip style={{ margin: 4 }} icon="clock">
             4 hours
           </Chip>
           <Chip style={{ margin: 4 }} icon="lock">
-            10 Private
+            Private
           </Chip>
           <Chip style={{ margin: 4 }} icon="lock">
             12 Public
-          </Chip>
+          </Chip> */}
         </View>
       </View>
 
       {/* Elements */}
       <ScrollView>
         <View style={{ margin: 10 }}>
-          <Text variant="headlineSmall"> ALL WORKS</Text>
+          <Text variant="titleMedium"> All Workouts </Text>
         </View>
         <View style={{ margin: 20 }}>
-          {/* {workouts?.workouts.map((workout) => (
-              <Workout_click key={workout.time} {...workout} />
-            ))} */}
-
-          {workouts.map((workout) =>
-            workout.workouts.map((workout) => (
-              <Workout_click key={workout.time} {...workout} />
-            ))
+          {!workouts.map((workout) => workout.workouts.length) ? (
+            <>
+            <Text variant="bodyLarge" style={{ margin: 10 }}>
+              No workouts found for {user?.username}
+            </Text>
+            </>
+          ) : (
+            workouts.map((workout) =>
+              workout.workouts.map((workout) => (
+                <Workout_click key={workout.time} {...workout} /> 
+              ))
+            )
           )}
-
-          {/* <Workout_click workouts={workouts?.workouts} /> */}
         </View>
       </ScrollView>
     </SafeAreaView>

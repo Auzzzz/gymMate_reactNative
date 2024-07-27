@@ -15,13 +15,13 @@ import { Button, Chip, Text, useTheme } from "react-native-paper";
 import Element_Dispay from "@/app/components/element_display";
 
 
-export default function IndividualWorkout(workout: Workout) {
+export default function IndividualWorkout() {
   const theme = useTheme();
 
   const [workoutElements, setWorkoutElements] = useState<Workout>();
   const [loading, setLoading] = useState(false);
   const auth = useAuth();
-
+  // Get the ID of the workout
   const { id } = useLocalSearchParams();
 
   useEffect(() => {
@@ -56,8 +56,6 @@ export default function IndividualWorkout(workout: Workout) {
     };
     get();
   }, []);
-
-  // console.log(workoutElements);
 
   const styles = StyleSheet.create({
     container: {
@@ -113,9 +111,9 @@ export default function IndividualWorkout(workout: Workout) {
       {/* Elements */}
       <ScrollView>
         <View style={{ margin: 10 }}>
-          <Text variant="headlineSmall"> Workout Elements</Text>
+          <Text variant="bodyLarge"> Workout Elements</Text>
         </View>
-        <View style={{ margin: 10 }}>
+        <View style={{ margin: 10, marginBottom: 100 }}>
           {workoutElements?.elements?.map((element) => (
             <Element_Dispay key={element.order} {...element} />
           ))}
